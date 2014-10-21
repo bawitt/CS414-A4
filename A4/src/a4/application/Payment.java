@@ -1,5 +1,6 @@
 package a4.application;
 
+//import org.joda.time.*;
 import java.util.Date;
 //import java.util.Calendar;
 
@@ -7,24 +8,31 @@ public class Payment {
 	PaymentType paymentType;
 	double amountDue;
 	Date paymentDate;
-	Date enterDate;
 	int duration;
 	Ticket ticket;
+	double standardRate;
+	double flatRate;
 	
 	public Payment(PaymentType p, Ticket t){
 		paymentType = p;
 		ticket = t;
 		Date paymentDate = new Date();
+		duration = ticket.getDurationHours();
+		standardRate = ticket.getTicketStandardRate();
+		flatRate = ticket.getTicketFlatRate();
 	}
 	
-	public double getAmountDue(){ //set to correct num decimals
-		enterDate = ticket.getDate();
-		duration = calcDuration(enterDate, paymentDate);
-		amountDue = duration * ticket.getTicketRate();
+	public double getStandardAmountDue(){ //set to correct num decimals
+		amountDue = duration * standardRate;
+		return amountDue;
+	}
+	public double getFlatRateAmountDue(){
+		amountDue = flatRate;
 		return amountDue;
 	}
 	
-	public void makePayment(){
+	/*
+	public void makeStandardPayment(){
 		if(paymentType==PaymentType.electronic){
 			CashPayment cp = new CashPayment(amountDue);
 		}
@@ -32,8 +40,6 @@ public class Payment {
 			ElectronicPayment ep = new ElectronicPayment(amountDue);
 		}
 	}
-	
-	public int calcDuration(Date enterDate, Date paymentDate){//needs work
-		return duration;
-	}
+	*/
+
 }

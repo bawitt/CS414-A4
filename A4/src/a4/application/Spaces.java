@@ -10,6 +10,11 @@ public class Spaces {
 		usedSpaces = u;
 		updateVacancy();
 	}
+	public Spaces(){
+		numSpaces = 0;
+		usedSpaces = 0;
+		updateVacancy();
+	}
 	
 	public void updateVacancy(){
 		if(usedSpaces<numSpaces){

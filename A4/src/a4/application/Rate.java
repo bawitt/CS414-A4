@@ -2,16 +2,28 @@ package a4.application;
 
 public class Rate {
 	double rate;
+	double flatRate;
 	
-	public Rate(double r){
+	public Rate(double r, double fr){
 		rate = r;
+		flatRate = fr;
+	}
+	public Rate(){
+		rate = 0;
+		flatRate = 0;
 	}
 	
-	public double getRate(){
+	public double getStandardRate(){
 		return rate;
 	}
-	
-	public void setRate(double r){
+	public void setStandardRate(double r){
 		rate = r;
+	}
+	
+	public double getFlatRate(){
+		return flatRate;
+	}
+	public void setFlatRate(double r){
+		flatRate = r;
 	}
 }
