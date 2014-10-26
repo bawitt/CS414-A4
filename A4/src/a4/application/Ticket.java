@@ -8,24 +8,28 @@ public class Ticket {
 	DateTime enterDate;
 	double ticketStandardRate;
 	double ticketFlatRate;
+	DateTime paymentDate;
 	
 	public Ticket(int i, Rate r){
 		id = i;
-		DateTime enterDate = new DateTime();
-		ticketStandardRate = r.getRate();
+		enterDate = new DateTime();
+		ticketStandardRate = r.getStandardRate();
 		ticketFlatRate = r.getFlatRate();
 	}
-	//hours from entry until current time
-	public int getDurationHours(){  
-		DateTime d = new DateTime();
-		Hours hoursInGarage = Hours.hoursBetween(enterDate, d);
-		return (hoursInGarage.getHours() + 1);
+	public Ticket(){
 	}
 	
+	//hours from entry until current time
+	public int getDurationHours(){  
+		paymentDate = new DateTime();
+		System.out.println(id);
+		Hours hoursInGarage = Hours.hoursBetween(enterDate, paymentDate);
+		return (hoursInGarage.getHours() + 1);
+	}
 	public int getID(){
 		return id;
 	}
-	public DateTime getDate(){
+	public DateTime getEnterDate(){
 		return enterDate;
 	}
 	public double getTicketStandardRate(){

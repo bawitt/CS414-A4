@@ -5,6 +5,7 @@ public class Sign {
 	
 	public Sign(){
 		status = SignStatus.vacancy;
+		//System.out.println(status);
 	}
 	public void refreshSign(Spaces s){
 		if(s.usedSpaces<s.numSpaces){

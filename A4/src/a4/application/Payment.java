@@ -12,34 +12,32 @@ public class Payment {
 	Ticket ticket;
 	double standardRate;
 	double flatRate;
+	boolean isFlatRate = false;
 	
-	public Payment(PaymentType p, Ticket t){
-		paymentType = p;
+	public Payment(Ticket t){
+		isFlatRate = false;
+		paymentDate = new Date();
 		ticket = t;
-		Date paymentDate = new Date();
 		duration = ticket.getDurationHours();
 		standardRate = ticket.getTicketStandardRate();
-		flatRate = ticket.getTicketFlatRate();
-	}
-	
-	public double getStandardAmountDue(){ //set to correct num decimals
 		amountDue = duration * standardRate;
-		return amountDue;
 	}
-	public double getFlatRateAmountDue(){
+	public Payment(Rate r){
+		isFlatRate = true;
+		paymentDate = new Date();
+		flatRate = r.getFlatRate();
 		amountDue = flatRate;
+	}
+	public double getAmountDue(){
 		return amountDue;
 	}
-	
-	/*
-	public void makeStandardPayment(){
-		if(paymentType==PaymentType.electronic){
-			CashPayment cp = new CashPayment(amountDue);
-		}
-		if(paymentType==PaymentType.cash){
-			ElectronicPayment ep = new ElectronicPayment(amountDue);
-		}
+	public Ticket getPaymentTicket(){
+		return ticket;
 	}
-	*/
-
+	public boolean getIsFlatRate(){
+		return isFlatRate;
+	}
+	public Date getPaymentDate(){
+		return paymentDate;
+	}
 }

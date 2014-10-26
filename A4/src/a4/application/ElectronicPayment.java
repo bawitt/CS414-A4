@@ -1,13 +1,12 @@
 package a4.application;
 
-public class ElectronicPayment {
+public class ElectronicPayment{
 	int accountNum;
 	double amountDue;
 	
-	public ElectronicPayment(double amt, int act){
+	public ElectronicPayment(Payment pay, int act){;
 		accountNum = act;
-		amountDue = amt;
-		
+		amountDue = pay.getAmountDue();	
 	}
 	
 }

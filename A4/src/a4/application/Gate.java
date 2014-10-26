@@ -11,16 +11,15 @@ public class Gate {
 	
 	void closeGate(){
 		gateOpenStatus = false;
-		System.out.println(type + " gate closed. Thank you.");
+		System.out.println(type + " gate closed.");
 	}
 	void openGate(){
 		gateOpenStatus = true;
-		System.out.println(type + " gate open. Please enter.");
+		System.out.println(type + " gate open.");
 	}	
 	public GateType getType(){
 		return type;
 	}
-	
 	public boolean getGateOpenStatus(){
 		return gateOpenStatus;
 	}
