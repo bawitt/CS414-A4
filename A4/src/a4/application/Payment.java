@@ -5,39 +5,28 @@ import java.util.Date;
 //import java.util.Calendar;
 
 public class Payment {
-	PaymentType paymentType;
-	double amountDue;
-	Date paymentDate;
-	int duration;
-	Ticket ticket;
-	double standardRate;
-	double flatRate;
-	boolean isFlatRate = false;
+	private PaymentType paymentType;
+	private double amountDue;
+	private double originalAmountDue;
+	private Date paymentDate;
 	
-	public Payment(Ticket t){
-		isFlatRate = false;
+	public Payment(double ad, PaymentType pt){
 		paymentDate = new Date();
-		ticket = t;
-		duration = ticket.getDurationHours();
-		standardRate = ticket.getTicketStandardRate();
-		amountDue = duration * standardRate;
+		paymentType = pt;
+		originalAmountDue = ad;
+		amountDue = ad;
 	}
-	public Payment(Rate r){
-		isFlatRate = true;
-		paymentDate = new Date();
-		flatRate = r.getFlatRate();
-		amountDue = flatRate;
-	}
+
 	public double getAmountDue(){
 		return amountDue;
 	}
-	public Ticket getPaymentTicket(){
-		return ticket;
-	}
-	public boolean getIsFlatRate(){
-		return isFlatRate;
-	}
 	public Date getPaymentDate(){
 		return paymentDate;
+	}
+	public PaymentType getPaymentType(){
+		return paymentType;
+	}
+	public double getOriginalAmountDue(){
+		return originalAmountDue;
 	}
 }

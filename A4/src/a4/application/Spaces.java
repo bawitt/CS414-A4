@@ -1,8 +1,8 @@
 package a4.application;
 
 public class Spaces {
-	int numSpaces;
-	int usedSpaces;
+	private int numSpaces;
+	private int usedSpaces;
 	
 	public Spaces(int s, int u){
 		numSpaces = s;
@@ -12,7 +12,6 @@ public class Spaces {
 		numSpaces = 0;
 		usedSpaces = 0;
 	}
-	
 	public void incEnter(){
 		usedSpaces = usedSpaces + 1;
 	}

@@ -1,8 +1,8 @@
 package a4.application;
 
 public class Gate {
-	GateType type;
-	boolean gateOpenStatus;
+	private GateType type;
+	private boolean gateOpenStatus;
 	
 	public Gate(GateType t){
 		type = t;
@@ -11,7 +11,7 @@ public class Gate {
 	
 	void closeGate(){
 		gateOpenStatus = false;
-		System.out.println(type + " gate closed.");
+		System.out.println(type + " gate closed.\n");
 	}
 	void openGate(){
 		gateOpenStatus = true;

@@ -1,17 +1,17 @@
 package a4.application;
 
-public class CashPayment{
-	double amountDue;
-	double change;
-	double paymentAmount;
+public class CashPayment extends Payment{
+	private double amountDue;
+	private double change;
+	private double paymentAmount;
 	
-	public CashPayment(Payment pay, double pa){
-		amountDue = pay.getAmountDue();
+	public CashPayment(double ad, double pa){
+		super(ad, PaymentType.cash);
+		amountDue = ad;
 		paymentAmount = pa;
 		change = 0;
 		makeInitialCashPayment();	
 	}
-	
 	public void makeInitialCashPayment(){
 		amountDue = amountDue - paymentAmount;
 		if(amountDue<0) change = amountDue *-1;
@@ -23,7 +23,6 @@ public class CashPayment{
 	public double getAmountDue(){
 		return amountDue;
 	}
-	
 	public double getChange(){
 		return change;
 	}

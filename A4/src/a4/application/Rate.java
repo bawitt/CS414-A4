@@ -1,8 +1,8 @@
 package a4.application;
 
 public class Rate {
-	double rate;
-	double flatRate;
+	private double rate;
+	private double flatRate;
 	
 	public Rate(double r, double fr){
 		rate = r;
