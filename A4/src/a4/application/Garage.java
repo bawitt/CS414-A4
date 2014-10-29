@@ -16,7 +16,7 @@ public class Garage {
 	private Set<Employee> users = new HashSet<Employee>();
 	
 	public Garage(){ //hard values exist for initial object creation
-		createEmployee("bwitt", 1234);
+		createEmployee("bwitt", "1234");
 		capacitySign = new Sign();
 		entryGate = new Gate(GateType.entrance);
 		exitGate = new Gate(GateType.exit);
@@ -72,7 +72,7 @@ public class Garage {
 		Employee emp = new Employee();
 		return emp;
 	}
-	public boolean authorizeUser(String un, int pn){
+	public boolean authorizeUser(String un, String pn){
 		boolean success = false;
 		emp = getEmployeeFromList(un);
 		success = emp.isApproved(pn);
@@ -94,19 +94,36 @@ public class Garage {
 		exitGate.closeGate();
 		updateSignStatus();
 	}
-	public void createEmployee(String un, int pn){
+	public void createEmployee(String un, String pn){
 		Employee emp = new Employee(un, pn);
 		users.add(emp);
 	}
 	public Rate getGarageRate(){
 		return garageRate;
 	}
+	public SignStatus getSignStatus(){
+		return capacitySign.getSignStatus();
+	}
 	public double getGarageFlatRate(){
 		return garageRate.getFlatRate();
+	}
+	
+	public Set<Employee> getEmployeeList(){
+		return users;
+	}
+	public Set<Ticket> getActiveTicketList(){
+		return activeTickets;
+	}
+	public Set<Ticket> getPaidTicketList(){
+		return paidTickets;
+	}
+	public int getGarageUsedSpaces(){
+		return garageSpaces.getUsedSpaces();
 	}
 	public void showsSpaceStatus(){
 		System.out.println("Status: " + capacitySign.getSignStatus()
 				+ "\nTotal Spaces: " + garageSpaces.getNumSpaces()
 				+ "\nUsed Spaces: " + garageSpaces.getUsedSpaces() + "\n");
 	}	
+	
 }

@@ -17,17 +17,18 @@ public class ElectronicPayment extends Payment{
 	}
 	
 	public boolean isAccountValid(){
-		if(isDateValid(expDate)&&isActNumValid(accountNum)){
+		if(isDateValid()&&isActNumValid()){
 			return true;
 		}
 		else return false;
 	}
 	
-	public boolean isDateValid(String strDate){
+	public boolean isDateValid(){  //check date format
+		String ed = expDate;
 		SimpleDateFormat dtfmt = new SimpleDateFormat("MM/yyyy");
 		Date date = null;
 		try{
-			date = dtfmt.parse(strDate); 
+			date = dtfmt.parse(ed); 
 		}
 		catch (ParseException e)
         {
@@ -36,15 +37,16 @@ public class ElectronicPayment extends Payment{
         }
 		return true;
 	}
-	public boolean isActNumValid(String actNum){
-	    for(char c : actNum.toCharArray())
+	public boolean isActNumValid(){
+		String actNum= accountNum;
+	    for(char c : actNum.toCharArray()) //check that actNum is all digits
 	    {
 	        if(!Character.isDigit(c)){
 	        	System.out.println("Account number format is invalid.");
 	        	return false;
 	        }
 	    }
-		if(actNum.length()!=16){
+		if(actNum.length()!=16){  //check that actNum is correct length
 			System.out.println("Account number length is invalid.");
 			return false;
 		}

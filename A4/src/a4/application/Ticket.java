@@ -30,6 +30,9 @@ public class Ticket {
 	public DateTime getEnterDate(){
 		return enterDate;
 	}
+	public void setPaymentDate(DateTime dt){ //for testing purposes
+		paymentDate = dt;
+	}
 	public double getTicketStandardRate(){
 		return ticketStandardRate;
 	}

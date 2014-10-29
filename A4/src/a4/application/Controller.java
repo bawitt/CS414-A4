@@ -35,16 +35,15 @@ public class Controller {
 			System.out.println("Enter user name: ");
 			String un = input.next(); 
 			System.out.println("Enter user pass code: ");
-			int pn = input.nextInt();
+			String pn = input.next();
 			boolean loginSuccess = garage.authorizeUser(un, pn);
-			if(loginSuccess) {System.out.println("Successful login."); empMenu();}
-			else {System.out.println("Login unsuccessful."); mainMenu();}
+			if(loginSuccess) {System.out.println("Successful login.\n"); empMenu();}
+			else {System.out.println("Login unsuccessful.\n");}
 			break;
 		case 5: garage.showsSpaceStatus(); break;
 		case 6: System.out.println("Exiting..."); break;
 		default:
-			System.out.println("Invalid selection.\n");
-			mainMenu(); break;
+			System.out.println("Invalid selection.\n"); break;
 		}
 		pause();
 		}
@@ -68,7 +67,7 @@ public class Controller {
 			amountDue = garage.getGarageFlatRate();
 			System.out.println("Amount due: $" + df.format(amountDue) + "\n");
 			paymentMenu(amountDue, ticket, true); break;
-		case 3: mainMenu(); break;
+		case 3: break;
 		default:
 			System.out.println("Invalid selection.\n");
 			exitMenu(); break;
@@ -113,7 +112,7 @@ public class Controller {
 			}
 			else paymentMenu(amountDue, ticket, isFlatRate);
 			break;
-		case 3: mainMenu(); break;
+		case 3: break;
 		default:
 			System.out.println("Invalid selection.\n");
 			paymentMenu(amountDue, ticket, isFlatRate); break;
@@ -144,14 +143,14 @@ public class Controller {
 			System.out.println("Enter new user name: ");
 			userName = input.next();
 			System.out.println("Enter new user pass code using numeric value: ");
-			int pwChoice = input.nextInt();
+			String pwChoice = input.next();
 			garage.createEmployee(userName, pwChoice); break;
 		case 5: 
 			System.out.println("Enter user name to deactivate: ");
 			userName = input.next();
 			Employee emp = garage.getEmployeeFromList(userName);
 			emp.deactivateUser(); break;
-		case 6: mainMenu(); break;	
+		case 6: break;	
 		default:
 			System.out.println("Invalid selection.\n");
 			empMenu(); break;
