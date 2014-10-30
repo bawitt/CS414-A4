@@ -42,7 +42,7 @@ public class ElectronicPayment extends Payment{
 	    for(char c : actNum.toCharArray()) //check that actNum is all digits
 	    {
 	        if(!Character.isDigit(c)){
-	        	System.out.println("Account number format is invalid.");
+	        	System.out.println("\nAccount number format is invalid.\n");
 	        	return false;
 	        }
 	    }

@@ -32,16 +32,16 @@ public class Controller {
 		case 2: exitMenu(); break;
 		case 3: System.out.println("Assistance requested"); break;
 		case 4: 			
-			System.out.println("Enter user name: ");
+			System.out.println("\nEnter user name: ");
 			String un = input.next(); 
 			System.out.println("Enter user pass code: ");
 			String pn = input.next();
 			boolean loginSuccess = garage.authorizeUser(un, pn);
-			if(loginSuccess) {System.out.println("Successful login.\n"); empMenu();}
-			else {System.out.println("Login unsuccessful.\n");}
+			if(loginSuccess) {System.out.println("\nSuccessful login.\n"); empMenu();}
+			else {System.out.println("\nLogin unsuccessful.\n");}
 			break;
 		case 5: garage.showsSpaceStatus(); break;
-		case 6: System.out.println("Exiting..."); break;
+		case 6: System.out.println("Exiting Application..."); break;
 		default:
 			System.out.println("Invalid selection.\n"); break;
 		}
@@ -51,21 +51,21 @@ public class Controller {
 	public void exitMenu(){
 		int exitChoice = 0;
 		//Ticket ticket = new Ticket();
-		System.out.println("Please Select an option: \n1. Enter Ticket ID "
+		System.out.println("\nPlease Select an option: \n1. Enter Ticket ID "
 				+ "\n2. Flat Rate Payment \n3. Back");
 		exitChoice = input.nextInt();
 		switch(exitChoice){
 		case 1: 
 			ticketID = getTicketID();
 			ticket = garage.getTicketFromList(ticketID);
-			if(ticket.getID()==-1) {System.out.println("Invalid ticket ID.\n"); exitMenu(); break;}
+			if(ticket.getID()==-1) {System.out.println("\nInvalid ticket ID.\n"); exitMenu(); break;}
 			amountDue = ticket.getAmountDue();
-			System.out.println("Amount due: " + df.format(amountDue) + "\n"); 
+			System.out.println("\nAmount due: " + df.format(amountDue) + "\n"); 
 			paymentMenu(amountDue, ticket, false); break;
 		case 2:  
 			Ticket ticket = new Ticket();
 			amountDue = garage.getGarageFlatRate();
-			System.out.println("Amount due: $" + df.format(amountDue) + "\n");
+			System.out.println("\nAmount due: $" + df.format(amountDue) + "\n");
 			paymentMenu(amountDue, ticket, true); break;
 		case 3: break;
 		default:
@@ -90,9 +90,10 @@ public class Controller {
 				paymentAmount = input.nextInt();
 				cp.makePostCashPayment(paymentAmount);
 				}
-			System.out.println("Change: $" + df.format(cp.getChange())); 
+			System.out.println("Please take change: $" + df.format(cp.getChange())); 
 			Receipt receipt = new Receipt(cp);
 			receipt.printReceipt();
+			garage.addReceiptToCollection(receipt);
 			pause();
 			if(isFlatRate==true)garage.exitGarage(); 
 			if(isFlatRate==false)garage.exitGarage(ticket); 
@@ -106,6 +107,7 @@ public class Controller {
 			if(ep.isAccountValid()){
 				Receipt r = new Receipt(ep);
 				r.printReceipt();
+				garage.addReceiptToCollection(r);
 				pause();
 				if(isFlatRate==true)garage.exitGarage(); 
 				else garage.exitGarage(ticket); 
@@ -124,7 +126,8 @@ public class Controller {
 		String userName = null;
 		System.out.println("Please Select an option: \n1. Update Hourly Rate "
 				+ "\n2. Update Flat Rate \n3. Update Spaces \n4. Create New User "
-				+ "\n5. Deactivate User \n6. Back");
+				+ "\n5. Deactivate User \n6. Override Payment on Exit \n7. Show Unpaid Tickets"
+				+ "\n8. Back");
 		empChoice = input.nextInt();
 		switch(empChoice){
 		case 1: 
@@ -140,7 +143,7 @@ public class Controller {
 			int newNumSpaces = input.nextInt();
 			garage.updateGarageSpaces(newNumSpaces);break;
 		case 4: 
-			System.out.println("Enter new user name: ");
+			System.out.println("\nEnter new user name: ");
 			userName = input.next();
 			System.out.println("Enter new user pass code using numeric value: ");
 			String pwChoice = input.next();
@@ -150,13 +153,31 @@ public class Controller {
 			userName = input.next();
 			Employee emp = garage.getEmployeeFromList(userName);
 			emp.deactivateUser(); break;
-		case 6: break;	
+		case 6: 
+			String custName, custAddress, custPhone;
+			int custTicketID = -1;
+			input.nextLine();
+			System.out.println("Enter customer name: ");
+			custName = input.nextLine();
+			System.out.println("Enter customer address: ");
+			custAddress = input.nextLine();
+			System.out.println("Enter customer phone #: ");
+			custPhone = input.nextLine();
+			System.out.println("Enter customer ticket ID: ");
+			custTicketID = input.nextInt();
+			Ticket custTicket = garage.getTicketFromList(custTicketID);
+			if(custTicket.getID()==-1) {System.out.println("\nInvalid ticket ID.\n"); empMenu();break;}
+			UnpaidTickets up = new UnpaidTickets(custName, custAddress, custPhone, custTicket);
+			garage.addUnpaidTicketToList(up); 
+			garage.exitGarage(custTicket); break;
+		case 7: 
+			garage.showUnpaidTickets(); break;
+		case 8: break;	
 		default:
 			System.out.println("Invalid selection.\n");
 			empMenu(); break;
 		}
 	}
-	
 	public int getTicketID(){
 		System.out.println("Enter ticket ID: ");
 		ticketID = input.nextInt();
@@ -164,8 +185,6 @@ public class Controller {
 	}
 	
 	public static void main(String [ ] args){
-		Garage garage = new Garage();
-		Scanner input = new Scanner(System.in);
 		Controller garageController = new Controller();
 		garageController.mainMenu();
 	}

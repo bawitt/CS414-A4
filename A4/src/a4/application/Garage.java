@@ -13,7 +13,9 @@ public class Garage {
 	private Employee emp;
 	private Set<Ticket> activeTickets = new HashSet<Ticket>();
 	private Set<Ticket> paidTickets = new HashSet<Ticket>();
+	private Set<UnpaidTickets> unpaidTickets = new HashSet<UnpaidTickets>();
 	private Set<Employee> users = new HashSet<Employee>();
+	private Set<Receipt> receipts = new HashSet<Receipt>();
 	
 	public Garage(){ //hard values exist for initial object creation
 		createEmployee("bwitt", "1234");
@@ -39,14 +41,15 @@ public class Garage {
 		garageRate.setFlatRate(r);
 	}
 	public void issueTicket() {
-		if(capacitySign.getSignStatus()==SignStatus.vacancy){
+		if(capacitySign.getSignStatus()==SignStatus.vacancy){ //prohibit entrance when full
 			ticketCount = ticketCount +1;
 			Ticket ticket = new Ticket(ticketCount, garageRate);
 			garageSpaces.incEnter();
 			activeTickets.add(ticket);
-			System.out.println("Your ticket ID is: "+ ticket.getID() + "\n");
+			System.out.println("Your ticket ID: "+ ticket.getID() 
+					+ "\nEntrance date/time: "+ ticket.getEnterDate() +"\n");
 			entryGate.openGate();
-			try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
+			try {Thread.sleep(1500);} catch (InterruptedException e) {e.printStackTrace();}
 			entryGate.closeGate();
 			updateSignStatus();
 		}
@@ -107,12 +110,16 @@ public class Garage {
 	public double getGarageFlatRate(){
 		return garageRate.getFlatRate();
 	}
-	
 	public Set<Employee> getEmployeeList(){
 		return users;
 	}
 	public Set<Ticket> getActiveTicketList(){
 		return activeTickets;
+	}
+	public void showUnpaidTickets(){
+		for(UnpaidTickets ut : unpaidTickets){
+			System.out.println(ut.toString());
+		}
 	}
 	public Set<Ticket> getPaidTicketList(){
 		return paidTickets;
@@ -120,10 +127,15 @@ public class Garage {
 	public int getGarageUsedSpaces(){
 		return garageSpaces.getUsedSpaces();
 	}
+	public void addReceiptToCollection(Receipt r){
+		receipts.add(r);
+	}
+	public void addUnpaidTicketToList(UnpaidTickets ut){
+		unpaidTickets.add(ut);
+	}
 	public void showsSpaceStatus(){
 		System.out.println("Status: " + capacitySign.getSignStatus()
 				+ "\nTotal Spaces: " + garageSpaces.getNumSpaces()
 				+ "\nUsed Spaces: " + garageSpaces.getUsedSpaces() + "\n");
 	}	
-	
 }
